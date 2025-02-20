@@ -1,9 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { isMobile } from "react-device-detect"; // Detect mobile devices
+import { TouchBackend } from "react-dnd-touch-backend";
 
 const ItemType = "TASK"; // item-type
 
@@ -132,7 +135,7 @@ const Dashboard = () => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
       <div>
         {/* Modal for editing task */}
         {isModalOpen && (

@@ -15,7 +15,7 @@ const Navbar = () => {
         <li><Link to ='/dashboard' className="hover:text-indigo-400">Dashboard</Link></li>
       </ul>
     </div>
-    <Link to='/' className="btn btn-ghost text-xl text-indigo-400">Task Manager</Link>
+    <Link to='/' className="btn btn-ghost text-xl text-indigo-400">TaskManager</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">

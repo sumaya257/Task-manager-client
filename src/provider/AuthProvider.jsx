@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import axios from "axios"; // Assuming you use Axios for API requests

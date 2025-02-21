@@ -1,10 +1,18 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useAuth } from "../provider/AuthProvider";
 
 const Login = () => {
-  const handleGoogleSignIn = () => {
-    console.log("Google Sign-In Clicked");
-    // Firebase Authentication logic should be implemented here
+  const { signInWithGoogle } = useAuth(); // Get function from context
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleLogin = async () => {
+    try {
+      await signInWithGoogle();
+      navigate("/dashboard"); // Navigate to dashboard after login
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (
@@ -14,7 +22,7 @@ const Login = () => {
         <p className="text-center text-gray-400">Manage your tasks efficiently</p>
         
         <button 
-          onClick={handleGoogleSignIn} 
+          onClick={handleLogin} 
           className="flex items-center justify-center w-full p-3 space-x-3 border rounded-lg transition bg-gray-700 hover:bg-gray-600"
         >
           <FcGoogle size={24} />

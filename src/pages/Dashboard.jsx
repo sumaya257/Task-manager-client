@@ -84,7 +84,7 @@ const Dashboard = () => {
         <h3 className="text-lg font-semibold text-white">{task.title}</h3>
         <p className="text-gray-300">{task.description}</p>
         <p className="text-gray-400 text-sm">Category: {task.category}</p>
-        <p className={`text-sm ${new Date(task.dueDate) < new Date() ? "text-red-500" : "text-gray-300"}`}>
+        <p className={`text-sm font-bold ${new Date(task.dueDate) < new Date() ? "text-red-500" : "text-gray-300"}`}>
         {task.dueDate}
         </p>
 

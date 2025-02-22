@@ -34,8 +34,8 @@ You can try the live version of the application at:
 
 ### Frontend:
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/task-manager.git
+   git clone https://github.com/sumaya257/Task-manager-client.git
+   
 Navigate to the frontend directory:
 2. cd task-manager
 3. Install dependencies:
@@ -44,8 +44,9 @@ Run the development server:
 5. npm run dev
 
 ### Backend:
-1.Clone the backend repository:
-git clone https://github.com/your-username/task-manager-backend.git
+1. Clone the backend repository:
+git clone https://github.com/sumaya257/Task-manager-server.git
+
 Navigate to the backend directory:
 2. cd task-manager-backend
 3. Install dependencies:
@@ -53,9 +54,9 @@ Navigate to the backend directory:
 Start the backend server:
 5. npm start/ nodemon index.js
 
-### Dependencies
+## Dependencies
 
-## Frontend:
+### Frontend:
 @tailwindcss/vite - TailwindCSS integration for Vite
 @tanstack/react-query - React Query for state management
 axios - Promise-based HTTP client for the browser and Node.js
@@ -64,6 +65,6 @@ react-dnd - React drag-and-drop library
 react-router-dom - React routing
 sweetalert2 - For showing alerts and notifications
 
-## Backend:
+### Backend:
 express - Fast, unopinionated web framework for Node.js
 mongodb - NoSQL database

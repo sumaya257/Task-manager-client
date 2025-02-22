@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { useAuth } from "../provider/AuthProvider";
 
 const Login = () => {
@@ -28,11 +28,6 @@ const Login = () => {
           <FcGoogle size={24} />
           <span>Sign in with Google</span>
         </button>
-
-        <p className="text-center text-gray-400">
-          Not registered? 
-          <Link to="/register" className="text-indigo-400 hover:underline"> Register here</Link>
-        </p>
       </div>
     </div>
   );

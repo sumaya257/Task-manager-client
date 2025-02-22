@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { isMobile } from "react-device-detect"; // Detect mobile devices
 import { TouchBackend } from "react-dnd-touch-backend";
+import { useAuth } from "../provider/AuthProvider";
 
 const ItemType = "TASK"; // item-type
 
@@ -15,20 +16,23 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
   const navigate = useNavigate();
+  const {user} = useAuth()
+  console.log(user?.email)
 
   // Fetch tasks from API
   const { data: tasks = [], isLoading, isError } = useQuery({
-    queryKey: ["tasks"],
+    queryKey: ["tasks", user?.email], 
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/added-task");
-      return res.json();
-    },
+    const res = await fetch(`https://task-manager-server-psi-red.vercel.app/added-task?email=${user?.email}`);
+    return res.json();
+  },
+  enabled: !!user?.email, // Only fetch when email exists
   });
 
   // Edit Task Mutation
   const editTask = useMutation({
     mutationFn: async (task) => {
-      const res = await fetch(`http://localhost:5000/added-task/${task._id}`, {
+      const res = await fetch(`https://task-manager-server-psi-red.vercel.app/added-task/${task._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(task),
@@ -45,7 +49,7 @@ const Dashboard = () => {
   // Delete Mutation
   const deleteTask = useMutation({
     mutationFn: async (id) => {
-      await fetch(`http://localhost:5000/added-task/${id}`, { method: "DELETE" });
+      await fetch(`https://task-manager-server-psi-red.vercel.app/added-task/${id}`, { method: "DELETE" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["tasks"]);
@@ -80,6 +84,10 @@ const Dashboard = () => {
         <h3 className="text-lg font-semibold text-white">{task.title}</h3>
         <p className="text-gray-300">{task.description}</p>
         <p className="text-gray-400 text-sm">Category: {task.category}</p>
+        <p className={`text-sm ${new Date(task.dueDate) < new Date() ? "text-red-500" : "text-gray-300"}`}>
+        {task.dueDate}
+        </p>
+
         <div className="flex justify-between mt-3">
           <button
             className="px-3 py-1 rounded-lg bg-teal-500 hover:bg-teal-600 transition text-white font-semibold shadow-lg"
@@ -139,7 +147,7 @@ const Dashboard = () => {
       <div>
         {/* Modal for editing task */}
         {isModalOpen && (
-          <div className="modal-overlay fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-75">
+          <div className="modal-overlay fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-75">
             <div className="modal-content bg-gray-800 p-6 rounded-lg w-1/3">
               <h2 className="text-xl font-bold">Edit Task</h2>
               <form

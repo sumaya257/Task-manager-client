@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
             setUser({ uid, email, displayName });
             
             // Store user details in the database upon first login
-            await axios.post("http://localhost:5000/added-user", {
+            await axios.post("https://task-manager-server-psi-red.vercel.app/added-user", {
                 uid,
                 email,
                 displayName,
@@ -31,17 +31,15 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             if (user) {
-                // Send a request to delete the user's data from the database
-                await axios.delete("http://localhost:5000/delete-user", {
-                    data: { uid: user.uid } // Sending the user's UID to delete their data
-                });
+                // Just sign out the user, no need to delete data
+                await signOut(auth);
+                setUser(null);  // Clear the user state
             }
-            await signOut(auth);
-            setUser(null);
         } catch (error) {
             console.error("Error during logout:", error);
         }
     };
+    
     
 
     useEffect(() => {

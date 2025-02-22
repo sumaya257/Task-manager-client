@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useAuth } from "../provider/AuthProvider";
 
 const AddTask = () => {
-  const [task, setTask] = useState({
+   const {user} = useAuth()
+   const [task, setTask] = useState({
     title: "",
     description: "",
     category: "To-Do",
+    dueDate: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -41,11 +44,14 @@ const AddTask = () => {
       title: task.title.trim(),
       description: task.description.trim(),
       category: task.category,
+      dueDate: task.dueDate,
       timestamp: new Date().toISOString(),
+      userEmail: user?.email
+
     };
 
     try {
-      const response = await fetch("http://localhost:5000/added-task", {
+      const response = await fetch("https://task-manager-server-psi-red.vercel.app/added-task", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),
@@ -107,6 +113,17 @@ const AddTask = () => {
           <option value="In Progress">In Progress</option>
           <option value="Done">Done</option>
         </select>
+
+        {/* Due Date Input */}
+    <label className="block mb-2 text-white">Due Date:</label>
+    <input
+      type="datetime-local"
+      name="dueDate"
+      value={task.dueDate}
+      onChange={handleChange}
+      className="w-full p-2 border rounded mb-4 bg-gray-700 text-white"
+    />
+    {errors.dueDate && <p className="text-red-500 text-sm mb-3">{errors.dueDate}</p>}
 
         {/* Submit Button */}
         <button
